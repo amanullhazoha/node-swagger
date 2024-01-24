@@ -7,8 +7,7 @@
         "node": "18.x"
     },
     "scripts": {
-        "start": "nodemon app.js -e js,yaml",
-        "vercel-buld": "echo hello"
+        "start": "nodemon app.js -e js,yaml"
     },
     "keywords": [],
     "author": "",
