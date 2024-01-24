@@ -2,12 +2,12 @@
     "name": "nodejs",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "app.js",
     "engines": {
         "node": "18.x"
     },
     "scripts": {
-        "start": "node index.js -e js,yaml",
+        "start": "nodemon app.js -e js,yaml",
         "vercel-buld": "echo hello"
     },
     "keywords": [],
@@ -19,7 +19,7 @@
         "nodemon": "^2.0.22",
         "q": "^1.5.1",
         "swagger": "^0.7.5",
-        "swagger-ui-express": "^4.6.0",
+        "swagger-ui-express": "^4.6.3",
         "yaml-js": "^0.3.1",
         "yamljs": "^0.3.0"
     }
