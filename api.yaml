@@ -1,102 +1,141 @@
 openapi: 3.0.0
 info:
-  title: Code Improve API
-  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
-  version: 1.0 
-  
+    title: Nagalay User Service
+    description: Nagalay User Service API Docs
+    version: 1.0
 
 servers:
-  - url: http://localhost:8081/
-    description:  Local server 
-  - url: https://prod.com/
-    description:  Pre Production server
-  - url: https://test.com/
-    description:  Production server
-  
+    - url: http://52.77.83.48:8082
+      description: Dev server
+    - url: http://localhost:8082/
+      description: Local server
 
- 
 components:
-  securitySchemes:
-    ApiTokenss:        # arbitrary name for the security scheme
-          
-      type: http
-      scheme: bearer
-    
-    ApiKey:        # arbitrary name for the security scheme
-      type: apiKey
-      in: header       # can be "header", "query" or "cookie"
-      name: apikey
-      
+    securitySchemes:
+        ApiTokenss: # arbitrary name for the security scheme
+            type: http
+            scheme: bearer
+
+        ApiKey: # arbitrary name for the security scheme
+            type: apiKey
+            in: header # can be "header", "query" or "cookie"
+            name: apikey
+
 paths:
-  /users/detail/{userId}:
-    get:
-      security:
-       - ApiTokenss: []
-       - ApiKey: []
-      summary: Returns a user details by ID.
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          description: Parameter description in CommonMark or HTML.
-          schema:
-            # type : integer
-            # format: int64
-            type: string
-            example: "Users String"
-            minimum: 1
-      responses: 
-        '200':
-          description: OK
-  
-
-  paths:
-  /users/list:
-    post:
-      tags:
-        - User List API 
-      summary: Returns a user list. 
-      description: <b> Request :- </b> <br /> <br />
-              <b> page_no* </b>  is required <br /> 
-              <b> status* </b>  is required <br /> 
-              <b> type* </b>  is required <br /> 
-
-      parameters:
-        - in: query
-          name: month_year
-          schema:
-            #type: integer
-            example: 2022-10        
-      post:
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-           #application/json:
-            schema:
-              type: object
-              properties: 
-                page_no:         
-                  type: integer
-                  example: 1  
-                type:       
-                  type: string
-                  example: "A" 
-                status:
-                  type: integer
-                  example: 0
-                fileName:
-                  type: string 
-                  format: binary
-         
-      responses:
-        '200':
-          description: A user object. 
-        '400':
-          description: The specified user ID is invalid (not a number).
-        '404':
-          description: A user with the specified ID was not found.
-        default:
-          description: Unexpected error
-  
-  
+    /api/v/1.0.0/public/users/registration-exists:
+        post:
+            tags:
+                - User Exist Checking
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                emailOrMobileNumber:
+                                    type: string
+                        examples:
+                            example1:
+                                summary: Phone Example
+                                value:
+                                    emailOrMobileNumber: "01715378419"
+                            example2:
+                                summary: Email Example
+                                value:
+                                    emailOrMobileNumber: amanullhazoha3784@gmail.com
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            examples:
+                                statusFoundByMobile:
+                                    summary: Found by mobile
+                                    value:
+                                        data:
+                                            emailOrMobileNumber: "+8801715378419"
+                                            searchStatus: "FOUND_BY_MOBILE"
+                                        message: "OK"
+                                statusFoundByEmail:
+                                    summary: Found by email
+                                    value:
+                                        data:
+                                            emailOrMobileNumber: "user@example.com"
+                                            searchStatus: "FOUND_BY_EMAIL"
+                                        message: "OK"
+    paths:
+    /api/v/1.0.0/public/users/login:
+        post:
+            tags:
+                - User Login API
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                username:
+                                    type: string
+                                password:
+                                    type: string
+                        examples:
+                            example1:
+                                summary: Phone Example
+                                value:
+                                    username: "01715378419"
+                                    password: Z123456@a
+                            example2:
+                                summary: Email Example
+                                value:
+                                    username: "amanullhazoha3784@gmail.com"
+                                    password: Z123456@a
+            responses:
+                "200":
+                    description: User Loggin successfully.
+                "401":
+                    description: Please provide correct email/phone or password.
+                default:
+                    description: Internal servcr error.
+    paths:
+    /api/v/1.0.0/public/customers/sign-up/by/phone-number:
+        post:
+            tags:
+                - User Sign UP by Phone API
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                fullName:
+                                    type: string
+                                email:
+                                    type: string
+                                mobile:
+                                    type: string
+                                primaryNumber:
+                                    type: string
+                                password:
+                                    type: string
+                                confirmPassword:
+                                    type: string
+                        examples:
+                            example1:
+                                summary: Phone Example
+                                value:
+                                    fullName: "01715378419"
+                                    email: "01715378419"
+                                    mobile: "01715378419"
+                                    primaryNumber: "01715378419"
+                                    password: Z123456@a
+                                    confirmPassword: Z123456@a
+            responses:
+                "200":
+                    description: User Loggin successfully.
+                "401":
+                    description: Please provide correct email/phone or password.
+                default:
+                    description: Internal servcr error.
